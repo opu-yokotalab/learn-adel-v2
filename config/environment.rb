@@ -65,5 +65,5 @@ end
 module LoginEngine
   config :salt, "hoge"
   config :use_email_notification, false
-  config :user_table, "learners"
+  config :user_table, "users"
 end
