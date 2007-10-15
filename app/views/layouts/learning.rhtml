@@ -15,6 +15,11 @@
 <%= flash[:message] %>
 
 <div class="table_of_contents">
+  <%= link_to_function "メニューを隠す", "Element.hide('menu')" %>
+<div id="menu">
+1.Top<br />
+2.ProgramList
+</div>
   <%= render :partial=>'toc' %>
 </div>
 
