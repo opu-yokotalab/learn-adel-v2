@@ -1,7 +1,7 @@
 <div class="menuList">
 <!-- <%= button_to 'Previous' %> -->
 
-<table style="width:420px;align:center">
+<table style="width:100%;align:center">
  <tr>
   <td style="width:100px;">
    <%= button_to 'Next', :action=>'next',:arg=>'-'%>
@@ -15,8 +15,12 @@
   <td style="width:120px;">
    <%= link_to 'Homeへ戻る', :controller => 'user', :action => 'home' %>
   </td>
+  <td style="width:120px;">
+   <%= button_to_function "目次の開閉", "Element.toggle('toc')" %>
+  </td>
  </tr>
 </table>
+
 </div>
 
 </div>

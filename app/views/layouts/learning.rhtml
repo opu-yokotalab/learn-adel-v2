@@ -4,7 +4,10 @@
 <head>
 <meta content='application/xhtml+xml; charset=UTF-8' http-equiv='Content-Type' />
 <title>ADEL - Learning View</title>
-<script type='text/javascript' src='http://192.168.204.128/~learn/cgi-bin/prot_test/func/evaluate.js'><!-- hoge --></script>
+<script type='text/javascript'
+src='http://192.168.204.128/~learn/cgi-bin/prot_test/func/evaluate.js'><!--
+hoge --></script>
+<%= javascript_include_tag :defaults %>
 <%= stylesheet_link_tag 'learning'%>
 <body>
 
@@ -14,12 +17,7 @@
 
 <%= flash[:message] %>
 
-<div class="table_of_contents">
-  <%= link_to_function "メニューを隠す", "Element.hide('menu')" %>
-<div id="menu">
-1.Top<br />
-2.ProgramList
-</div>
+<div id="toc" class="table_of_contents">
   <%= render :partial=>'toc' %>
 </div>
 
