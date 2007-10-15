@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content='application/xhtml+xml; charset=UTF-8' http-equiv='Content-Type' />
+<title>ADEL - Learning View</title>
+<script type='text/javascript' src='http://192.168.204.128/~learn/cgi-bin/prot_test/func/evaluate.js'><!-- hoge --></script>
+<%= stylesheet_link_tag 'learning'%>
+<body>
+
+<div class="menu_ope">
+  <%= render :partial=>'menu_ope'%>
+</div>
+
+<%= flash[:message] %>
+
+<div class="table_of_contents">
+  <%= render :partial=>'toc' %>
+</div>
+
+<div class="content">
+  <%= yield %>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+<h3>目次</h3>
+
+<ul style="margin-left:-10px;" >
+  <% i=1 %>
+  <% @tocList.each do |toc| %>
+  <li><%= link_to "#{i}:#{toc[1]}", :controller=>'learning', :action=>'toc', :arg=>"#{toc[0]}" %></li>
+  <% i+=1 %>
+  <% end %>
+</ul>
+

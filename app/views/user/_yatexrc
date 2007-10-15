@@ -1,0 +1,3 @@
+(setq yahtml-tmp-form-table '(
+("div")
+))

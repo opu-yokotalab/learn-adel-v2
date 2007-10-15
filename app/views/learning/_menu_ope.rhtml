@@ -1,0 +1,22 @@
+<div class="menuList">
+<!-- <%= button_to 'Previous' %> -->
+
+<table style="width:420px;align:center">
+ <tr>
+  <td style="width:100px;">
+   <%= button_to 'Next', :action=>'next',:arg=>'-'%>
+  </td>
+  <td style="width:100px;">
+   <%= button_to 'toHighLevel',:action=>'changeLv', :arg=>'up' %>
+  </td>
+  <td style="width:100px;">
+   <%= button_to 'toLowLevel',:action=>'changeLv', :arg=>'down' %>
+  </td>
+  <td style="width:120px;">
+   <%= link_to 'Homeへ戻る', :controller => 'user', :action => 'home' %>
+  </td>
+ </tr>
+</table>
+</div>
+
+</div>
