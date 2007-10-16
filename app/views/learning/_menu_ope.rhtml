@@ -1,26 +1,30 @@
 <div class="menuList">
 <!-- <%= button_to 'Previous' %> -->
 
-<table style="width:100%;align:center">
- <tr>
-  <td style="width:100px;">
-   <%= button_to 'Next', :action=>'next',:arg=>'-'%>
-  </td>
-  <td style="width:100px;">
-   <%= button_to 'toHighLevel',:action=>'changeLv', :arg=>'up' %>
-  </td>
-  <td style="width:100px;">
-   <%= button_to 'toLowLevel',:action=>'changeLv', :arg=>'down' %>
-  </td>
-  <td style="width:120px;">
-   <%= link_to 'Homeへ戻る', :controller => 'user', :action => 'home' %>
-  </td>
-  <td style="width:120px;">
-   <%= button_to_function "目次の開閉", "Element.toggle('toc')" %>
-  </td>
- </tr>
+<table style="width:100%">
+<tr>
+ <td style="width:50%;text-align:left;">
+  <table style="width:550px;text-align:center;">
+   <td widht="100px">
+    <%= link_to '<img border="0" width="80px" src="/adel_v2/public/images/next_ico.gif" />', :action=>'next',:arg=>'-'%>
+   </td>
+   <td width="120px">
+    <%= button_to '難しい内容',:action=>'changeLv', :arg=>'up' %> 
+   </td>
+   <td widht="120px">
+    <%= button_to '簡単な内容',:action=>'changeLv', :arg=>'down' %> 
+   </td>
+   <td>
+    <%= button_to_function "目次の開閉", "Element.toggle('toc')" %>
+   </td>
+  </table>
+   </td>
+ <td style="text-align:right">
+  <%= @username %> |
+  <%= link_to 'Logout', :controller => 'user', :action => 'logout' %> | 
+  <%= link_to 'Homeへ戻る', :controller => 'user', :action => 'home' %>
+ </td>
+</tr>
 </table>
-
-</div>
 
 </div>
