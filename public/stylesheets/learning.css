@@ -1,6 +1,5 @@
 body{
-  background-color:ghostwhite;
-  font-family: "ＭＳ ゴシック",sans-serif;
+  background-color:white;
   text-align:left;
 }
 
@@ -14,22 +13,23 @@ div.menuList form{
 
 div.menu_ope{
   width:95%;height:80px;
-  background-color:mintcream;
-  border:groove navy 7px;
-  font-size:11pt;
 }
 
 div.table_of_contents{
-  margin-top:30px;
-  background-color:mintcream;
+  margin-top:15px;
+  background-color:ghostwhite;
   border:double navy 7px;
   width:240px;
   float:left;
 }
 
 div.content{
+  margin-top:15px;
+  padding:10px;
+  background-color:ghostwhite;
+  border:solid navy 7px;
   margin-left:260px;
-  width:70%;
+  width:75%;
 }
 
 

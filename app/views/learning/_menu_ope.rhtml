@@ -3,27 +3,26 @@
 <table style="width:100%">
 <tr>
  <td style="width:50%;text-align:left;">
-  <table style="width:550px;text-align:center;">
-   <td widht="100px">
+  <table style="text-align:center;">
+   <td>
+    <img src="/adel_v2/public/images/adel_logo2.gif" />
+   </td>
+   <td width="200px">
     <%= link_to '<img border="0" width="80px" src="/adel_v2/public/images/next_ico.gif" />', :action=>'next',:arg=>'-'%>
    </td>
-   <td width="120px">
+   <td width="100px">
     <%= button_to '難しい内容',:action=>'changeLv', :arg=>'up' %> 
    </td>
-   <td widht="120px">
+   <td width="100px">
     <%= button_to '簡単な内容',:action=>'changeLv', :arg=>'down' %> 
    </td>
-<!--
-   <td>
-    <%= button_to_function "目次の開閉", "Element.toggle('toc')" %>
-   </td>
--->
   </table>
-   </td>
+ </td>
  <td valign="top" style="text-align:right">
-  <%= @username %>|
-  <%= link_to 'ログアウト', :controller => 'user', :action => 'logout' %>|
-  <%= link_to 'Homeへ戻る', :controller => 'user', :action => 'home' %>
+  <span style="font-weight:bold;"><%= @username %></span>|
+  <%= link_to 'アカウント情報', :controller => 'user', :action => 'edit' %>|
+  <%= link_to 'ホームへ', :controller => 'user', :action => 'home' %>|
+  <%= link_to 'ログアウト', :controller => 'user', :action => 'logout' %>
  </td>
 </tr>
 </table>
