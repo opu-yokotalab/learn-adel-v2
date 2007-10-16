@@ -1,5 +1,4 @@
 <div class="menuList">
-<!-- <%= button_to 'Previous' %> -->
 
 <table style="width:100%">
 <tr>
@@ -19,9 +18,9 @@
    </td>
   </table>
    </td>
- <td style="text-align:right">
-  <%= @username %> |
-  <%= link_to 'Logout', :controller => 'user', :action => 'logout' %> | 
+ <td valign="top" style="text-align:right">
+  <%= @username %>|
+  <%= link_to 'ログアウト', :controller => 'user', :action => 'logout' %>|
   <%= link_to 'Homeへ戻る', :controller => 'user', :action => 'home' %>
  </td>
 </tr>

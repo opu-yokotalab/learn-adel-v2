@@ -116,9 +116,8 @@ before_filter :login_required
     time_log[:time_name] = 'after_view'
     time_log[:time_value] = Time.now
     time_log.save
-
   end
-
+  
 # 内部処理用メソッド
 protected
 

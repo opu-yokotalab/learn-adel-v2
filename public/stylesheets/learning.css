@@ -1,6 +1,6 @@
 body{
   background-color:ghostwhite;
-  font-family:"ＭＳ ゴシック",sans-serif;
+  font-family: "ＭＳ ゴシック",sans-serif;
   text-align:left;
 }
 
@@ -13,25 +13,23 @@ div.menuList form{
 }
 
 div.menu_ope{
-  width:100%;height:80px;
+  width:95%;height:80px;
   background-color:mintcream;
   border:groove navy 7px;
-  font-size:12pt;
+  font-size:11pt;
 }
 
 div.table_of_contents{
   margin-top:30px;
   background-color:mintcream;
   border:double navy 7px;
-  width:250px;
-  height:100%;
+  width:240px;
   float:left;
 }
 
 div.content{
-  position:relative;
   margin-left:260px;
-  width:80%
+  width:80%;
 }
 
 
