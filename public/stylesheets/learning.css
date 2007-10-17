@@ -15,6 +15,14 @@ div.menu_ope{
   width:95%;height:80px;
 }
 
+div.message{
+  padding:8px;
+  margin:5px;
+  background-color:ghostwhite;
+  border:solid navy 2px;
+  width:480px;
+}
+
 div.table_of_contents{
   margin-top:15px;
   background-color:ghostwhite;

@@ -107,12 +107,19 @@ before_filter :login_required
   # 教材提示アクション
   def view
     @username = "#{session[:user].firstname} #{session[:user].lastname}"
+    dis_code = @params[:dis]
+
+    # 提示メッセージの検索,リストに格納
+    @msg = Array.new
+    msg_action = ActionLog.find(:all,:conditions=>"action_code = 'msg' AND dis_code = #{dis_code}",:order=>"id")
+    msg_action.each do |m|
+      @msg.push(m[:action_value].gsub(/\"/,'').toutf8)
+    end
+
     makeView(ModuleLog.getCurrentModule(session[:user].id , SeqLog.getCurrentId(session[:user].id) ))
     
     #ログインユーザのインスタンスを取得
     user = User.find(session[:user].id)
-
-    "123".to_i
     #PL/Perl 呼び出し後に時間を記録
     time_log = RuleSearchTimeLog.new
     time_log[:user_id] = user[:id]
@@ -130,7 +137,7 @@ protected
     user = User.find(session[:user].id)
     cur_seq_id = SeqLog.getCurrentId(user[:id])
 
-    #PL/Perl 呼び出し前に時間を記録
+    #操作コード挿入前に時間を記録
     time_log = RuleSearchTimeLog.new
     time_log[:user_id] = user[:id]
     time_log[:time_name] = 'before_perl'
@@ -159,14 +166,14 @@ protected
       end
     end
     
-    #PL/Perl 呼び出し後に時間を記録
+    #Action決定後に時間を記録
     time_log = RuleSearchTimeLog.new
     time_log[:user_id] = user[:id]
     time_log[:time_name] = 'after_perl'
     time_log[:time_value] = Time.now
     time_log.save
 
-    redirect_to :action=>'view'
+    redirect_to :action=>'view', :dis=>ope_log[:dis_code]
   end
 
   # アクションコード取得 メソッド
@@ -211,8 +218,19 @@ protected
         # 保存
         mod_log.save!
 
+        # そのあとのActionはスキップする
+        return
       when /retryall/       # 全体を再学習
+        # SEQの先頭IDを取得
+        # ModuleLog に追加
       when /exit/           # 学習の終了
+        mod_log = ModuleLog.new
+        mod_log[:ent_module_id]=-1
+        mod_log[:ent_seq_id] =cur_seq
+        mod_log[:user_id] = user[:id]
+        mod_log.save!
+        
+        return        
       when /changeLv/       # 学習者レベルの変更
         lev_log = LevelLog.new
         cur_seq = SeqLog.getCurrentId(user[:id])
@@ -223,8 +241,7 @@ protected
         lev_log[:user_id] = user[:id]
         #保存
         lev_log.save!
-      when /msg/          # メッセージの送信
-      when /assist/         # 補助教材の提示
+      when /assist/
       when /false/          # 実行するアクション無し
       end
     end
