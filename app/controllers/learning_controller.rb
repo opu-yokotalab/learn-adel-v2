@@ -370,7 +370,7 @@ protected
     flag = false # 判定フラグ
     if dom_obj.name["section"] ## section 要素ならば
       if dom_obj.attributes["title"] != ""
-        str_buff += "<h1>" + dom_obj.attributes["title"].toutf8 + "</h1>"
+        str_buff += "<h2>" + dom_obj.attributes["title"].toutf8 + "</h2>"
       else
         str_buff += "<br /><br />"
       end
@@ -390,7 +390,7 @@ protected
 
     else ## 意味要素　ならば
       if dom_obj.attributes["title"] != ""
-        str_buff += "<h2>" + dom_obj.attributes["title"].toutf8 + "</h2>"
+        str_buff += "<h3>" + dom_obj.attributes["title"].toutf8 + "</h3>"
       else
         str_buff += "<br /><br />"
       end

@@ -35,7 +35,7 @@ div.content{
   margin-top:15px;
   padding:10px;
   background-color:ghostwhite;
-  border:solid navy 7px;
+  border:solid navy 5px;
   margin-left:260px;
   width:75%;
 }
@@ -63,23 +63,23 @@ div.content{
   margin:20px;
 }
 
-h1{
+h2{
   padding-left:7px;
   border-color:cornflowerblue;
-  border-left-style:inset;
-  border-left-width:10px;
+  border-left-style:solid;
+  border-left-width:8px;
   border-bottom-style:solid;
-  border-bottom-width:3px;
+  border-bottom-width:4px;
 }
 
-h2{
+h3{
   width:80%;
   padding-left:5px;
   border-color:cornflowerblue;
-  border-left-style:inset;
-  border-left-width:7px;
+  border-left-style:solid;
+  border-left-width:5px;
   border-bottom-style:solid;
-  border-bottom-width:1px;
+  border-bottom-width:3px;
 }
 
 blockquote {
