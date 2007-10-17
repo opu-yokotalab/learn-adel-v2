@@ -215,7 +215,7 @@ class OperationLog < ActiveRecord::Base
           symbol = $2 # 式
           value1 = $3.to_i # 値
           left_flag = false # どちらが左辺か？フラグ
-        elsif ( reg2 =~ condition[1])
+        elsif ( reg2 =~ condition[0])
           var_name = $3
           symbol = $2
           value1 = $1.to_i
@@ -229,6 +229,7 @@ class OperationLog < ActiveRecord::Base
             value2 = v[1]
           end
         end
+
         if value2
           case symbol
           when /==/
@@ -259,13 +260,13 @@ class OperationLog < ActiveRecord::Base
             else
               flag = value2 > value1
             end            
-          else
-            flag = false
           end
-          return flag
+          unless flag
+            return false
+          end
+        else
+          return false
         end
-        
-        return false
       end
       n+=1
     end
