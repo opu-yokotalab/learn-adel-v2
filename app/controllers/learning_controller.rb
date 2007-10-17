@@ -1,4 +1,5 @@
 # written by Yutaka konishi
+# test
 # 2007/05/24
 require 'kconv'
 require 'rexml/document'
