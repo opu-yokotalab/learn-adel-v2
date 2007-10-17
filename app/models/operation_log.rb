@@ -22,6 +22,7 @@ class OperationLog < ActiveRecord::Base
 
     # ルールを評価
     # イベント毎に処理を分岐
+    #### もう少しきれいに書きたい・・・
     case ope_code
     when /next/    # 次の教材を要求するイベントの処理
 
@@ -170,36 +171,101 @@ class OperationLog < ActiveRecord::Base
 
   def conditionMatching(conditionList)
     n=0
+    # 変数名　チェック用　正規表現
+    reg_var = /(^[A-Z]+[0-9]*[a-z]*[0-9]*$)/
+    # 条件式評価用　正規表現
+    reg = /(^[A-Z]+[0-9]*[a-z]*[0-9]*)(!=|<=|>=|==|<|>)([0-9]+$)/ # ex.) Point <= 30
+    reg2 = /(^[0-9]+)(!=|<=|>=|==|<|>)([A-Z]+[0-9]*[a-z]*[0-9]*$)/ # ex.) 30 >= Point
+    # 変数格納用テーブル
+    var_tbl = Array.new
     while n < conditionList.length do
       condition = conditionList[n].split(/,/)
       case condition[0]
       when /currentModule/
       when /moduleMember/
       when /moduleCount/
-      when /(not|)testCompare/
+      when /testCompare/
         mod_id = ModuleLog.getCurrentModule(self[:user_id] , self[:ent_seq_id])
         cur_point = TestLog.getSumPoint(self[:user_id],self[:ent_seq_id],mod_id,condition[1])
-
-        if condition[0] == "testCompare"
-          # 現在の点数が指定より低ければfalse
-          if cur_point < condition[2].to_i
-            return false
-          end
-        elsif condition[0] == "nottestCompare"
-          # not 反転
-          # 現在の点数が指定より高ければfalse
-          if cur_point > condition[2].to_i
-            return false
-          end
+        # 変数名を取得
+        # 規約に合わない変数名は無視 ex.) 10Point(先頭が数値),point(先頭が小文字)
+        # 変数の内容が上書きされてたらどうしよう　放置？上書き？そこでfalseを返す？
+        reg_var =~ condition[2]
+        var_name = $1
+        # 変数テーブルに格納
+        if var_name
+          var_tbl.push([var_name,cur_point.to_i])
         end
       when /testTime/
       when /testCount/
       when /currentLevel/
         cur_level = LevelLog.getCurrentLevel(self[:user_id],self[:ent_seq_id])
-        if cur_level != condition[1]
-          # condition ミスマッチ
-          return false
+        # 変数名を取得
+        reg_var =~ condition[1]
+        var_name = $1
+        # 変数テーブルに格納
+        if var_name
+          var_tbl.push([var_name,cur_level.to_i])
         end
+      else
+        # 条件式の評価
+        # フラグ使わなくて良い方法　誰かおせーて
+        if (reg =~ condition[0])
+          var_name = $1 # 変数名
+          symbol = $2 # 式
+          value1 = $3.to_i # 値
+          left_flag = false # どちらが左辺か？フラグ
+        elsif ( reg2 =~ condition[1])
+          var_name = $3
+          symbol = $2
+          value1 = $1.to_i
+          left_flag = true
+        end
+        
+        # 変数に格納されている値を取得
+        value2 = nil
+        var_tbl.each do |v|
+          if v[0] == var_name
+            value2 = v[1]
+          end
+        end
+        if value2
+          case symbol
+          when /==/
+            flag = value2 == value1
+          when /!=/
+            flag = value2 != value1
+          when /<=/
+            if left_flag
+              flag = value1 <= value2
+            else
+              flag = value2 <= value1
+            end
+          when />=/
+            if left_flag
+              flag = value1 >= value2
+            else
+              flag = value2 >= value1
+            end            
+          when /</
+            if left_flag
+              flag = value1 < value2
+            else
+              flag = value2 < value1
+            end            
+          when />/
+            if left_flag
+              flag = value1 > value2
+            else
+              flag = value2 > value1
+            end            
+          else
+            flag = false
+          end
+          return flag
+        end
+        
+        return false
       end
       n+=1
     end

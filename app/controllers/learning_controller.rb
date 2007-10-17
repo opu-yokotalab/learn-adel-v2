@@ -110,6 +110,8 @@ before_filter :login_required
     
     #ログインユーザのインスタンスを取得
     user = User.find(session[:user].id)
+
+    "123".to_i
     #PL/Perl 呼び出し後に時間を記録
     time_log = RuleSearchTimeLog.new
     time_log[:user_id] = user[:id]
