@@ -130,7 +130,7 @@ before_filter :login_required
   
 # 内部処理用メソッド
 protected
-
+  
   # 操作Event　処理
   def operation_event(ope_code,e_arg)
     #ログインユーザのインスタンスを取得
