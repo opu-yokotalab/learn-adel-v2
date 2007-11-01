@@ -5,23 +5,17 @@
 ActiveRecord::Schema.define(:version => 15) do
 
   create_table "action_logs", :force => true do |t|
-    t.column "user_id",     :integer
-    t.column "action_code", :string
-    t.column "created_on",  :time
-    t.column "dis_code",    :integer
-  end
-
-  create_table "ent_levels", :force => true do |t|
-    t.column "level", :integer
+    t.column "user_id",      :integer
+    t.column "ent_seq_id",   :integer
+    t.column "action_code",  :string
+    t.column "action_value", :string
+    t.column "created_on",   :time
+    t.column "dis_code",     :integer
   end
 
   create_table "ent_modules", :force => true do |t|
-    t.column "module_name", :integer
+    t.column "module_name", :string
     t.column "module_src",  :text
-  end
-
-  create_table "ent_operations", :force => true do |t|
-    t.column "operation_code", :string
   end
 
   create_table "ent_questions", :force => true do |t|
@@ -40,10 +34,10 @@ ActiveRecord::Schema.define(:version => 15) do
   end
 
   create_table "level_logs", :force => true do |t|
-    t.column "user_id",      :integer
-    t.column "ent_seq_id",   :integer
-    t.column "ent_level_id", :integer
-    t.column "created_on",   :time
+    t.column "user_id",    :integer
+    t.column "ent_seq_id", :integer
+    t.column "level",      :integer
+    t.column "created_on", :time
   end
 
   create_table "module_logs", :force => true do |t|
@@ -54,12 +48,12 @@ ActiveRecord::Schema.define(:version => 15) do
   end
 
   create_table "operation_logs", :force => true do |t|
-    t.column "user_id",          :integer
-    t.column "ent_seq_id",       :integer
-    t.column "ent_operation_id", :integer
-    t.column "event_arg",        :string
-    t.column "created_on",       :time
-    t.column "dis_code",         :integer
+    t.column "user_id",        :integer
+    t.column "ent_seq_id",     :integer
+    t.column "operation_code", :string
+    t.column "event_arg",      :string
+    t.column "created_on",     :time
+    t.column "dis_code",       :integer
   end
 
   create_table "question_logs", :force => true do |t|
