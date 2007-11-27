@@ -5,8 +5,17 @@
 <meta content='application/xhtml+xml; charset=UTF-8' http-equiv='Content-Type' />
 <title>ADEL - Learning View</title>
 <script type='text/javascript'
-src='/~learn/cgi-bin/prot_test/func/evaluate.js'><!--
-hoge --></script>
+src='/~learn/cgi-bin/prot_test/func/evaluate.js'><!-- hoge --></script>
+<link href="prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="prettify.js"></script>
+
+<script type="text/javascript">try{
+	window.addEventListener("load",prettyPrint,false);
+}catch(e){
+	window.attachEvent("onload",prettyPrint);
+}
+</script>
+
 <%= javascript_include_tag :defaults %>
 <%= stylesheet_link_tag 'learning'%>
 <body>
