@@ -7,7 +7,7 @@ class CreateQuestionLogs < ActiveRecord::Migration
       t.column :ent_test_id, :integer
       t.column :ent_question_id, :integer
       t.column :point, :integer
-      t.column :created_on, :time
+      t.column :created_on, :timestamp
     end
   end
 

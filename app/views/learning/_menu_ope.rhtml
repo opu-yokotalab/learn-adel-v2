@@ -8,7 +8,11 @@
     <img src="/adel_v2/public/images/adel_logo2.gif" />
    </td>
    <td width="200px">
-    <%= link_to '<img border="0" width="80px" src="/adel_v2/public/images/next_ico.gif" />', :action=>'next',:arg=>'-'%>
+    <% unless @test_flag %>
+    <%= link_to '<img border="0" width="80px" src="/adel_v2/public/images/next_ico.gif" />',:action=>'next',:arg=>'-'%>
+    <% else %>
+    <img border="0" width="80px" src="/adel_v2/public/images/next_forb_ico.gif" />
+    <% end%>
    </td>
    <td width="100px">
     <%= button_to '難しい内容',:action=>'changeLv', :arg=>'up' %> 

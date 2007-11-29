@@ -1,17 +1,24 @@
-<div title="<%= title_helper %>" class="form">
-  <h3>Signup</h3>
+<div style="position:relative;top:40px;left:50px;" title="<%=
+title_helper %>" class="form">
 
+<div style="text-align:center;border:solid 2px
+gray;background-color:Gainsboro;width:400px;" >
+  <h3>ADEL　アカウント登録</h3>
+ADELを利用するためのアカウントを作成します。
   <%= error_messages_for 'user' %>
 
-  <div class="form-padding">
+  <div style="position:relative;left:15px;" class="form-padding">
     <%= start_form_tag :action => 'signup' %>
       <%= render_partial 'edit', :user => @user, :submit => false %><br/>
       <%= render_partial 'password', :submit => false %>
-
+  <br />
       <div class="button-bar">
-        <%= submit_tag 'Signup' %>
-        <%= link_to 'Cancel', :action => 'login' %>
+        <%= submit_tag '登録' %>
+        <%= link_to 'キャンセル', :action => 'login' %>
       </div>
     <%= end_form_tag %>
+  <br />
   </div>
+</div>
+
 </div>

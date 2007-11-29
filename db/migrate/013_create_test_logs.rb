@@ -6,7 +6,7 @@ class CreateTestLogs < ActiveRecord::Migration
       t.column :ent_module_id, :integer
       t.column :ent_test_id, :integer
       t.column :sum_point, :integer
-      t.column :created_on, :time
+      t.column :created_on, :timestamp
     end
   end
 

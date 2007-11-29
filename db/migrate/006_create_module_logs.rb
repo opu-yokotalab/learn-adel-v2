@@ -4,7 +4,7 @@ class CreateModuleLogs < ActiveRecord::Migration
       t.column :user_id, :integer
       t.column :ent_seq_id, :integer
       t.column :ent_module_id, :integer
-      t.column :created_on, :time
+      t.column :created_on, :timestamp
     end
   end
 

@@ -1,6 +1,5 @@
-# written by Yutaka konishi
-# test A
-# 2007/05/24
+# ADEL Learning Controller
+# authed by Yutaka Konishi
 require 'kconv'
 require 'rexml/document'
 require 'net/http'
@@ -37,13 +36,11 @@ before_filter :login_required
     #next redirect(Query To Rule Engine)
     cur_mod_id = ModuleLog.getCurrentModule(session[:user].id , SeqLog.getCurrentId(session[:user].id) )
 
-    redirect_to :action => 'next'
-
-    #if cur_mod_id == -1
-    #  redirect_to :action => 'next'
-    #else
-    #  redirect_to :action => 'view'
-    #end
+    if cur_mod_id == -1
+      redirect_to :action => 'next'
+    else
+      redirect_to :action => 'view', :dis=>'-1'
+    end
   end
   
   #テスト結果問い合わせ DBのログに追加処理
@@ -59,15 +56,6 @@ before_filter :login_required
     res_buff.each do |t|
       result.push t.split(/:/)
     end
-    
-    #　合計点を計算
-    sum = 0
-    result.each do |t|
-      sum += t[1].to_i
-    end
-    
-    #問題ごとの結果を問題ログに格納する(未実装)
-
 
     #テストIDを取得
     test_name = @params[:testname]
@@ -75,7 +63,28 @@ before_filter :login_required
     #現在のシーケンシングIDとモジュールIDを取得
     seqID = SeqLog.getCurrentId(session[:user].id)
     moduleID = ModuleLog.getCurrentModule(session[:user].id , seqID)
-    #ログに追加
+    
+    sum = 0  # 合計点
+    result.each do |q|
+      #問題IDを取得
+      qID = EntQuestion.find(:first,:conditions=>"question_name = '#{q[0]}'")
+      qlog = QuestionLog.new
+      qlog[:user_id] = session[:user].id
+      qlog[:ent_seq_id] = seqID
+      qlog[:ent_module_id] = moduleID
+      qlog[:ent_test_id] = testID[:id]
+      qlog[:ent_question_id] = qID[:id]
+      qlog[:point] = q[1].to_i
+      #問題グループ毎のログを保存
+      QuestionLog.transaction do
+        qlog.save!
+      end
+      
+      # テスト結果の合計点を計算
+      sum += q[1].to_i
+    end
+
+    # テスト結果の合計点をログに保存
     testlog = TestLog.new
     testlog[:user_id] = session[:user].id
     testlog[:ent_seq_id] = seqID
@@ -249,11 +258,17 @@ protected
   
   # 画面生成メソッド
   def makeView(mod_id)
+    $test_flag = false
+    # テストを提示するか否かのフラグ(グローバル変数)
+    # テストの場合、NEXTボタンを無効にする
+
     view_mod = EntModule.find(:first,:conditions=>"id = #{mod_id}")
     if view_mod
       @bodystr_html = ""
       node_array = GetXTDLNodeIDs(view_mod[:module_name].to_s)
       @bodystr_html = GetXTDLSources(node_array)
+      # test_flagの内容をビューに伝達
+      @test_flag = $test_flag
     else
       @bodystr_html = "<h2>学習を終了します.</h2>"
     end
@@ -378,6 +393,9 @@ protected
         str_buff += XTDLNodeSearch(elem)
       end
     elsif dom_obj.name["examination"] then ## テスト記述要素ならば
+      # テストフラグをON
+      $test_flag = true
+      
       # テスト記述要素以下をすべてテスト機構にPost
       http = Net::HTTP.new('localhost' , 80)
       req = Net::HTTP::Post.new("/~learn/cgi-bin/prot_test/adel_exam.cgi")
@@ -386,7 +404,7 @@ protected
 
       testid = dom_obj.attributes["id"]
     
-      str_buff += "<br /><br /><form method=\"post\" action=\"/adel_v2/public/learning/examCommit?testname=#{testid}\" class=\"button-to\"><div><input type=\"submit\" value=\"Commit\" /></div></form>"
+      str_buff += "<br /><br /><form method=\"post\" action=\"/adel_v2/public/learning/examCommit?testname=#{testid}\" class=\"button-to\"><div><input type=\"submit\" value=\"テストの合否判定\" /></div></form>"
 
     else ## 意味要素　ならば
       if dom_obj.attributes["title"] != ""

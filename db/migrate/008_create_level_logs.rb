@@ -4,8 +4,7 @@ class CreateLevelLogs < ActiveRecord::Migration
       t.column :user_id, :integer
       t.column :ent_seq_id, :integer
       t.column :level, :integer
-      #t.column :ent_level_id, :integer
-      t.column :created_on, :time
+      t.column :created_on, :timestamp
     end
   end
 

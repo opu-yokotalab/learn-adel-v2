@@ -4,9 +4,8 @@ class CreateOperationLogs < ActiveRecord::Migration
       t.column :user_id, :integer
       t.column :ent_seq_id, :integer
       t.column :operation_code, :string
-      #t.column :ent_operation_id, :integer
       t.column :event_arg, :string
-      t.column :created_on, :time
+      t.column :created_on, :timestamp
       t.column :dis_code, :integer
     end
   end

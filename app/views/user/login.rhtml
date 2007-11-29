@@ -1,18 +1,32 @@
-<div title="<%= title_helper %>" class="form">
-  <h3>Please Login</h3>
+<div style="position:relative;top:40px;left:50px;" title="<%=
+title_helper %>" class="form">
 
-  <div class="form-padding">
-    <%= start_form_tag :action => 'login'  %>
-      <table>
-        <%= form_input :text_field, "Login ID", "login", :size => 30 %><br/>
-        <%= form_input :password_field, "Password", "password", :size => 30 %><br/>
-      </table>
+<div style="text-align:center;border:solid 2px
+gray;background-color:Gainsboro;width:400px;" class="form-padding">
+<h3>ADEL アカウント</h3>
+ADELにログインします。
+<%= start_form_tag :action => 'login'  %>
+<table style="position:relative;left:40px;">
+ <%= form_input :text_field, "Login ID", "login", :size => 30 %><br/>
+ <%= form_input :password_field, "Password", "password", :size => 30 %><br/>
+</table>
+<br />
+<%= submit_tag 'ログイン' %><br />
+<%= end_form_tag %>
+<br />
+</div>
 
-      <div class="button-bar">
-        <%= submit_tag 'Login' %><br />
-        <br />
-        <%= link_to 'アカウント登録', :action => 'signup' %> |
-	<%= link_to 'Homeへ戻る', :action => 'home' %></div>
-    <%= end_form_tag %>
-  </div>
+<br />
+
+<div style="text-align:center;border:solid 2px
+gray;background-color:Gainsboro;width:400px;" class="button-bar">
+<p>ADELのアカウントをお持ちでない場合</p>
+<%= link_to 'アカウント登録', :action => 'signup' %>
+<br /><br />
+</div>
+
+<p>
+<%= link_to 'Homeへ戻る', :action => 'home' %>
+</p>
+
 </div>

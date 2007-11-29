@@ -3,7 +3,7 @@ class CreateSeqLogs < ActiveRecord::Migration
     create_table :seq_logs do |t|
       t.column :user_id, :integer
       t.column :ent_seq_id, :integer
-      t.column :created_on, :time
+      t.column :created_on, :timestamp
     end
   end
 
