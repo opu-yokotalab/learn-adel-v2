@@ -47,7 +47,7 @@ before_filter :login_required
   def examCommit
     # テスト結果を取得
     http = Net::HTTP.new('localhost' , 80)
-    req = Net::HTTP::Get.new("/~learn/cgi-bin/prot_test/adel_exam.cgi?mode=result")
+    req = Net::HTTP::Get.new("/prot_test/adel_exam.cgi?mode=result")
     res = http.request(req)
     res_buff = res.body.split(/,/)
       
@@ -398,7 +398,7 @@ protected
       
       # テスト記述要素以下をすべてテスト機構にPost
       http = Net::HTTP.new('localhost' , 80)
-      req = Net::HTTP::Post.new("/~learn/cgi-bin/prot_test/adel_exam.cgi")
+      req = Net::HTTP::Post.new("/prot_test/adel_exam.cgi")
       res = http.request(req,"&mode=set&src=" + dom_obj.to_s)
       str_buff += res.body
 
