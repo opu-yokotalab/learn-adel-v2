@@ -183,8 +183,8 @@ class OperationLog < ActiveRecord::Base
       case condition[0]
       when /currentModule/
       when /moduleMember/
-      when /moduleCount/
-      when /testCompare/
+      when /getModuleCount/
+      when /getTestPoint/
         mod_id = ModuleLog.getCurrentModule(self[:user_id] , self[:ent_seq_id])
         cur_point = TestLog.getSumPoint(self[:user_id],self[:ent_seq_id],mod_id,condition[1])
         # 変数名を取得
@@ -196,9 +196,9 @@ class OperationLog < ActiveRecord::Base
         if var_name
           var_tbl.push([var_name,cur_point.to_i])
         end
-      when /testTime/
-      when /testCount/
-      when /currentLevel/
+      when /getTestTime/
+      when /getTestCount/
+      when /getCurrentLevel/
         cur_level = LevelLog.getCurrentLevel(self[:user_id],self[:ent_seq_id])
         # 変数名を取得
         reg_var =~ condition[1]
@@ -214,12 +214,12 @@ class OperationLog < ActiveRecord::Base
           var_name = $1 # 変数名
           symbol = $2 # 式
           value1 = $3.to_i # 値
-          left_flag = false # どちらが左辺か？フラグ
+          value_left_flag = false # 条件式の値が左辺にあるか否か　フラグ
         elsif ( reg2 =~ condition[0])
           var_name = $3
           symbol = $2
           value1 = $1.to_i
-          left_flag = true
+          value_left_flag = true
         end
         
         # 変数に格納されている値を取得
@@ -237,25 +237,25 @@ class OperationLog < ActiveRecord::Base
           when /!=/
             flag = value2 != value1
           when /<=/
-            if left_flag
+            if value_left_flag
               flag = value1 <= value2
             else
               flag = value2 <= value1
             end
           when />=/
-            if left_flag
+            if value_left_flag
               flag = value1 >= value2
             else
               flag = value2 >= value1
             end            
           when /</
-            if left_flag
+            if value_left_flag
               flag = value1 < value2
             else
               flag = value2 < value1
             end            
           when />/
-            if left_flag
+            if value_left_flag
               flag = value1 > value2
             else
               flag = value2 > value1
