@@ -1,7 +1,9 @@
 <div class="user_edit">
   <table>
-    <%= form_input changeable(user, "firstname"), "First Name", "firstname" %>
-    <%= form_input changeable(user, "lastname"), "Last Name","lastname" %>
+    <%= form_input changeable(user, "firstname"), "First Name",
+    "firstname" %>
+    <%= form_input changeable(user, "lastname"), "Last Name","lastname"
+    %>
     <%= form_input changeable(user, "login"), "Login ID", "login", :size => 30 %><br/>
     <%= form_input changeable(user, "email"), "Email", "email" %>
     <% if submit %>
