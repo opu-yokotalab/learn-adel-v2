@@ -45,12 +45,18 @@ before_filter :login_required
   
   #テスト結果問い合わせ DBのログに追加処理
   def examCommit
+    # test_key_hashをテスト機構に問合せ
+    http = Net::HTTP.new('localhost',80)
+    req = Net::HTTP::Post.new("/~learn/cgi-bin/prot_test/adel_exam.cgi")
+    res = http.request(req,"&mode=get_testkey&user_id=#{session[:user].id}")
+    test_key_hash = res.body
+
     # テスト結果を取得
     http = Net::HTTP.new('localhost' , 80)
-    req = Net::HTTP::Get.new("/~learn/cgi-bin/prot_test/adel_exam.cgi?mode=result")
+    req = Net::HTTP::Get.new("/~learn/cgi-bin/prot_test/adel_exam.cgi?mode=result&test_key=#{test_key_hash}")
     res = http.request(req)
     res_buff = res.body.split(/,/)
-      
+    
     #result [["q_id","得点"], ... ]
     result = []
     res_buff.each do |t|
@@ -291,6 +297,7 @@ protected
         end
         i+=1
       end
+      buffList.uniq!
       #tocList: [[mod_id , title name] , ........]
       @tocList = []
       # リソースからタイトル属性の値を抜く
@@ -399,11 +406,11 @@ protected
       # テスト記述要素以下をすべてテスト機構にPost
       http = Net::HTTP.new('localhost' , 80)
       req = Net::HTTP::Post.new("/~learn/cgi-bin/prot_test/adel_exam.cgi")
-      res = http.request(req,"&mode=set&src=" + dom_obj.to_s)
+      res = http.request(req,"&mode=set&user_id=#{session[:user].id}&src=" + dom_obj.to_s)
       str_buff += res.body
 
       testid = dom_obj.attributes["id"]
-    
+
       str_buff += "<br /><br /><form method=\"post\" action=\"/adel_v2/public/learning/examCommit?testname=#{testid}\" class=\"button-to\"><div><input type=\"submit\" value=\"テストの合否判定\" /></div></form>"
 
     else ## 意味要素　ならば
