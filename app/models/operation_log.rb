@@ -185,8 +185,7 @@ class OperationLog < ActiveRecord::Base
       when /moduleMember/
       when /getModuleCount/
       when /getTestPoint/
-        mod_id = ModuleLog.getCurrentModule(self[:user_id] , self[:ent_seq_id])
-        cur_point = TestLog.getSumPoint(self[:user_id],self[:ent_seq_id],mod_id,condition[1])
+        cur_point = TestLog.getSumPoint(self[:user_id],self[:ent_seq_id],condition[1])
         # 変数名を取得
         # 規約に合わない変数名は無視 ex.) 10Point(先頭が数値),point(先頭が小文字)
         # 変数の内容が上書きされてたらどうしよう　放置？上書き？そこでfalseを返す？

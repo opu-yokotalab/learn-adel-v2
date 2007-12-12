@@ -285,24 +285,42 @@ protected
     if seq_id != -1
       ent_seq = EntSeq.find(seq_id)
       # buffList: [[mod_id , xtdl_id] , ........]
+      nextList = []
+      tocList = []
       buffList = []
       seq_src = ent_seq[:seq_src].gsub(/(\s|\n)/,'').split(/\./)
       i =0
       while i < seq_src.length
-        /toc\(\s*(.+?),.*\)/ =~ seq_src[i]
-        if $1
-          # node_array [ [ resource_name , [res_id,...]], ... ]
-          node_array = GetXTDLNodeIDs($1)
-          buffList << [$1 , node_array[0] ]
+        # tocのモジュールIDを抽出
+        if /toc\((.+?),.*\)/ =~ seq_src[i]
+          tocList.push($1)
+        end
+        # nextのモジュールIDを抽出
+        if /next\(\[(.+?),(.+?)\],.*\)/ =~ seq_src[i]
+          mod = [$1,$2]
+          if mod[0] != "start"
+            nextList.push(mod[0])
+          end
+          if mod[1] != "end"
+            nextList.push(mod[1])
+          end
         end
         i+=1
       end
-      buffList.uniq!
-      #tocList: [[mod_id , title name] , ........]
+      # 重複要素を削除
+      nextList.uniq!
+      tocList.uniq!
+      # 参照しているリソースの最初のtitle属性の値を抽出
+      nextList.each do |m|
+        # node_array [ [ resource_name , [res_id,...]], ... ]
+        node_array = GetXTDLNodeIDs(m)
+        buffList << [m , node_array[0], tocList.include?(m)]
+      end
+      #tocList: [[mod_id , title name , true|false] , ........]
       @tocList = []
       # リソースからタイトル属性の値を抜く
       buffList.each do |buff|
-        @tocList << [buff[0] , GetElementTitle(buff[1])]
+        @tocList << [buff[0] , GetElementTitle(buff[1]), buff[2]]
       end
     end
   end
@@ -357,7 +375,7 @@ protected
     }
     return node_array
   end
-
+  
   
   # 教材ノードから提示すべきHTMLソースを取得
   def GetXTDLSources(node_id_array)

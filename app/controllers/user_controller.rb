@@ -21,7 +21,7 @@ class UserController < ApplicationController
     @seqList=[]
     i=0
     if session[:user]
-      seqs = EntSeq.find(:all)
+      seqs = EntSeq.find(:all,:order=>"id")
       seqs.each do |seq|
         @seqList[i] = [seq.id,seq.seq_title.toutf8]
         i+=1

@@ -1,16 +1,8 @@
 <% i=0 %>
 <% @msg.each do |m|%>
-<div class="message" id="msg<%= i %>">
-<table width="480px">
-<tr>
- <td width="400px" align="left">
- Message: <span style="font-weight:bold;font-size:13pt;"><%= m %></span>
- </td>
- <td width="80px" align="right">
-  <%= button_to_function '閉じる',"Element.remove('msg#{i}')" %>
- </td>
-</tr>
-</table>
+<div class="message" id="msg<%= i %>" style="width:80%">
+ <%= button_to_function '閉じる',"Element.remove('msg#{i}')" %>
+ <dl><dt><span style="font-weight:bold;font-size:13pt;"><%= m %></span></dt></dl>
 </div>
 <% i+=1 %>
 <% end %>
